@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Вход</title>
+</head>
+<body>
+    <div sec:authorize="isAuthenticated()">
+        response.sendRedirect("/user");
+    </div>
+    <form th:method="POST" th:action="/login">
+        <h2>Вход в систему</h2>
+        <div>
+            <input name="username" type="text" placeholder="Username" autofocus="true"/>
+            <input name="password" type="password" placeholder="Password"/>
+            <button type="submit">Log In</button>
+        </div>
+    </form>
+</body>
+</html>

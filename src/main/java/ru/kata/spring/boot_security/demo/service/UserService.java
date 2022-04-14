@@ -20,6 +20,10 @@ public class UserService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
+    public User findByUsername(String name) {
+        return userRepository.findByUsername(name);
+    }
+
     public User findById(Long id) {
         return userRepository.findById(id).orElse(null);
     }

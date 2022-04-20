@@ -27,18 +27,16 @@ public class Data {
 
     @PostConstruct
     public void init() {
-        Role roleAdmin = new Role("ROLE_ADMIN");
-        Role roleUser = new Role("ROLE_USER");
+        Role roleAdmin = new Role(1L,"ROLE_ADMIN");
+        Role roleUser = new Role(2L,"ROLE_USER");
 
         roleService.addRole(roleAdmin);
         roleService.addRole(roleUser);
 
-        User romanUser = new User("roman","torop",19,"rom4ik");
-        romanUser.setPassword(passwordEncoder.encode("123"));
+        User romanUser = new User("roman","torop",19,"rom4ik", passwordEncoder.encode("123"));
         romanUser.setRoles(new HashSet(Arrays.asList(roleAdmin,roleUser)));
 
-        User makarUser  = new User("makar","pavlov",21, "makar4ik");
-        makarUser.setPassword(passwordEncoder.encode("1234"));
+        User makarUser  = new User("makar","pavlov",21, "makar4ik",passwordEncoder.encode("1234"));
         makarUser.setRoles(new HashSet(List.of(roleUser)));
 
         userService.saveUser(romanUser);

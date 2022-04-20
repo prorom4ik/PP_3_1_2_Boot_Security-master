@@ -8,7 +8,7 @@
 <div th:switch="${users}">
   <h2 th:case="null">No users found!</h2>
   <div th:case="*">
-    <h2>Users List</h2>
+    <h2>Список пользователей</h2>
     <table>
       <thead>
       <tr>
@@ -16,6 +16,7 @@
         <th>First name</th>
         <th>Last name</th>
         <th>Age</th>
+        <th>Username</th>
         <th>Roles</th>
       </tr>
       </thead>
@@ -25,16 +26,17 @@
         <td th:text="${user.firstName}"></td>
         <td th:text="${user.lastName}"></td>
         <td th:text="${user.age}"></td>
+        <td th:text="${user.username}"></td>
         <td th:each="role : ${user.getRoles()}">
           <div th:text="${role.getName()}">role</div>
         </td>
-        <td><a th:href="@{user-update/{id}(id=${user.id})}">Edit</a></td>
-        <td><a th:href="@{user-delete/{id}(id=${user.id})}">Delete</a></td>
+        <td><a th:href="@{/admin/user-update/{id}(id=${user.id})}">Edit</a></td>
+        <td><a th:href="@{/admin/user-delete/{id}(id=${user.id})}">Delete</a></td>
       </tr>
       </tbody>
     </table>
   </div>
-  <p><a href="/user-create">Create user</a></p>
+  <p><a href="/admin/user-create">Добавить пользователя</a></p>
   <br/>
   <form th:action="@{/logout}" method="get">
     <input type="submit" value="Logout"/>

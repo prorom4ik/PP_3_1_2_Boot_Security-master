@@ -16,37 +16,87 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "first_name")
+    @Column(name = "first_name", length = 45, nullable = false)
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column(name = "last_name", length = 45, nullable = false)
     private String lastName;
 
-    @Column(name = "username")
+    @Column(name = "username", length = 60, nullable = false, unique = true)
     private String username;
 
-    @Column(name = "password")
+    @Column(name = "password", length = 64, nullable = false)
     private String password;
 
-    @Column(name = "age")
+    @Column(name = "age", nullable = false)
     private int age;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    public User(String firstName, String lastName, int age, String username) {
+    public User(String firstName, String lastName, String username, String password, int age, Set<Role> roles) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.password = password;
+        this.age = age;
+        this.roles = roles;
+    }
+
+    public User(String firstName, String lastName, int age, String username, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
         this.username = username;
+        this.password = password;
     }
 
     public User() {
     }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getRoles();
+    }
+
+    ////////////////////////////////
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+
+    ////////////////////////////////
 
     public Long getId() {
         return id;
@@ -80,11 +130,6 @@ public class User implements UserDetails {
         this.age = age;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getRoles();
-    }
-
     public Set<Role> getRoles() {
         return roles;
     }
@@ -93,41 +138,11 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return username;
-    }
-
     public void setUsername(String username) {
         this.username = username;
     }
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
     }
 }

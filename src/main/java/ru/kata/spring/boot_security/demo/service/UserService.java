@@ -45,6 +45,12 @@ public class UserService implements UserDetailsService {
         userToUpdate.setFirstName(updatedUser.getFirstName());
         userToUpdate.setLastName(updatedUser.getLastName());
         userToUpdate.setAge(updatedUser.getAge());
+        userToUpdate.setUsername(updatedUser.getUsername());
+
+        if (updatedUser.getPassword() != null && !updatedUser.getPassword().equals("")) {
+            userToUpdate.setPassword(updatedUser.getPassword());
+        }
+        userToUpdate.setRoles(updatedUser.getRoles());
         userRepository.saveAndFlush(userToUpdate);
     }
 

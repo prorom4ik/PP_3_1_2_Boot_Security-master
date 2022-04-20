@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Новый пользователь</title>
+</head>
+<body>
+<form th:action="@{/admin}" th:object="${user}" method="post">
+    <label for="firstName">First name</label>
+    <input type="text" th:field="*{firstName}" id="firstName" required="required">
+    <br/>
+
+    <label for="lastName">Last name</label>
+    <input type="text" th:field="*{lastName}" id="lastName" required="required">
+    <br/>
+
+    <label for="age">Age</label>
+    <input type="number" th:field="*{age}" id="age" required="required">
+    <br/>
+
+    <label for="username">Username</label>
+    <input type="text" th:field="*{username}" id="username" required="required">
+    <br/>
+
+    <label for="password">Password</label>
+    <input type="password" th:field="*{password}" id="password" required="required">
+    <br/>
+
+    <p>
+        <label>Roles:
+            <input type="checkbox" name="roleList"
+                   th:each="role : ${roleList}"
+                   th:text="${role.name}"
+                   th:value="${role.id}"
+                   th:field="*{roles}"
+            />
+        </label>
+    </p>
+
+    <input type="submit" value="Добавить">
+</form>
+
+</body>
+</html>

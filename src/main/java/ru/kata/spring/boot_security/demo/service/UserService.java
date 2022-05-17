@@ -5,12 +5,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
 import java.util.List;
 
 @Service
+@Transactional(readOnly = true)
 public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
@@ -32,14 +34,17 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
+    @Transactional
     public void saveUser(User user) {
         userRepository.save(user);
     }
 
+    @Transactional
     public void deleteById(long id) {
         userRepository.deleteById(id);
     }
 
+    @Transactional
     public void updateUser(Long id, User updatedUser) {
         User userToUpdate = findById(id);
         userToUpdate.setFirstName(updatedUser.getFirstName());

@@ -51,7 +51,7 @@ public class AdminController {
     public String createUser(User user) {
         if (user.getRoles().isEmpty()) {
             LOGGER.log(Level.SEVERE,"Попытка создания пользователя без ролей");
-            return "error";
+            return "emptyRolesError";
         }
 
         String password  = user.getPassword();
@@ -78,7 +78,7 @@ public class AdminController {
     public String updateUser(@PathVariable("id") Long id, User user) {
         if (user.getRoles().isEmpty()) {
             LOGGER.log(Level.SEVERE,"Попытка создания пользователя без ролей");
-            return "error";
+            return "emptyRolesError";
         }
         String password  = user.getPassword();
         if (password != null && !password.equals("")) {
